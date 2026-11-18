@@ -22,14 +22,21 @@
     </properties>
 
     <dependencies>
-        <!-- 1. SQLite JDBC (Driver database embedded) -->
+        <!-- 1. SQLite JDBC -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.2.0</version>
         </dependency>
+        
+        <!-- Silenzia gli avvisi console di SLF4J per SQLite -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.36</version>
+        </dependency>
 
-        <!-- 2. Framework Testing JUnit 5 -->
+        <!-- 2. Testing JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -49,7 +56,7 @@
             <version>${log4j.version}</version>
         </dependency>
 
-        <!-- 4. Libreria GUI JavaFX -->
+        <!-- 4. JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -64,7 +71,6 @@
 
     <build>
         <plugins>
-            <!-- Compiler Plugin su Java 21 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -73,15 +79,11 @@
                     <release>21</release>
                 </configuration>
             </plugin>
-
-            <!-- Surefire Plugin per test JUnit 5 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
             </plugin>
-
-            <!-- Plugin JaCoCo per misurare la code coverage (>80%) -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
