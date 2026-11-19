@@ -1,4 +1,5 @@
-
+package it.unibg.smartrescue.model;
+import java.time.*;
 import java.util.*;
 
 /**
@@ -71,7 +72,6 @@ public class Mezzo {
      */
     public void cambiaStato(StatoMezzo nuovoStato) {
         // TODO implement here
-        return null;
     }
 
     /**

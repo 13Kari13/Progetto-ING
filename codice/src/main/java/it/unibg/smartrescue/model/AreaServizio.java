@@ -1,5 +1,7 @@
+package it.unibg.smartrescue.model;
 
 import java.util.*;
+import java.time.*;
 
 /**
  * # Classe AreaServizio

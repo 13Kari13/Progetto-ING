@@ -1,4 +1,5 @@
-
+package it.unibg.smartrescue.model;
+import java.time.*;
 import java.util.*;
 
 /**
@@ -67,7 +68,7 @@ public class PosizioneTurno {
      */
     public void assegnaVolontario(Utente u) {
         // TODO implement here
-        return null;
+        
     }
 
     /**
@@ -75,7 +76,7 @@ public class PosizioneTurno {
      */
     public void liberaPosizione() {
         // TODO implement here
-        return null;
+        
     }
 
     /**

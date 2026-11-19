@@ -1,3 +1,4 @@
+package it.unibg.smartrescue.model;
 
 import java.util.*;
 
@@ -63,7 +64,7 @@ public class Dotazione {
      */
     public void simulaParametro() {
         // TODO implement here
-        return null;
+        
     }
 
 }

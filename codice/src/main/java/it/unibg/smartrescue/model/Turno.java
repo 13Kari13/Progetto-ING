@@ -1,4 +1,5 @@
-
+package it.unibg.smartrescue.model;
+import java.time.*;
 import java.util.*;
 
 /**
@@ -80,7 +81,7 @@ public class Turno {
      */
     public void conferma() {
         // TODO implement here
-        return null;
+        
     }
 
     /**
@@ -88,7 +89,7 @@ public class Turno {
      */
     public void avvia() {
         // TODO implement here
-        return null;
+        
     }
 
     /**
@@ -96,7 +97,7 @@ public class Turno {
      */
     public void chiudi() {
         // TODO implement here
-        return null;
+        
     }
 
     /**
@@ -104,7 +105,7 @@ public class Turno {
      */
     public void annulla() {
         // TODO implement here
-        return null;
+        
     }
 
     /**

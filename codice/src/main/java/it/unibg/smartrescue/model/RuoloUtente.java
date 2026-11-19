@@ -1,3 +1,4 @@
+package it.unibg.smartrescue.model;
 
 /**
  * # Enum RuoloUtente

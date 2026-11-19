@@ -1,4 +1,5 @@
-
+package it.unibg.smartrescue.model;
+import java.time.*;
 import java.util.*;
 
 /**
