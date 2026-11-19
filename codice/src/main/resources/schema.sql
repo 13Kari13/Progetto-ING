@@ -1,20 +1,19 @@
 -- ============================================================================
 -- Smart Rescue System - Schema Database SQLite 3
--- Autore: Derouich Sukaina (WP4 - Modellazione strutturale)
 -- ============================================================================
 
 PRAGMA foreign_keys = ON;
 
 -- 1. Utenti del sistema (Volontario, Capoturno, Amministratore)
 CREATE TABLE IF NOT EXISTS utente (
-    id_utente      INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome           TEXT    NOT NULL,
-    cognome        TEXT    NOT NULL,
-    email          TEXT    NOT NULL UNIQUE,
-    password_hash  TEXT    NOT NULL,
-    ruolo          TEXT    NOT NULL CHECK (ruolo IN ('VOLONTARIO', 'CAPOTURNO', 'AMMINISTRATORE')),
-    telefono       TEXT,
-    attivo         INTEGER NOT NULL DEFAULT 1 CHECK (attivo IN (0, 1))
+    idUtente      INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome          TEXT    NOT NULL,
+    cognome       TEXT    NOT NULL,
+    email         TEXT    NOT NULL UNIQUE,
+    passwordHash  TEXT    NOT NULL,
+    telefono      TEXT,
+    ruolo         TEXT    NOT NULL CHECK (ruolo IN ('VOLONTARIO', 'CAPOTURNO', 'AMMINISTRATORE')),
+    attivo        BOOLEAN NOT NULL DEFAULT 1 CHECK (attivo IN (0, 1))
 );
 
 -- 2. Catalogo qualifiche, patenti e idoneita CRI
@@ -22,105 +21,108 @@ CREATE TABLE IF NOT EXISTS qualifica (
     codice         TEXT    PRIMARY KEY,
     denominazione  TEXT    NOT NULL,
     tipologia      TEXT    NOT NULL,
-    permanente     INTEGER NOT NULL DEFAULT 0 CHECK (permanente IN (0, 1)),
-    mesi_validita  INTEGER
+    permanente     BOOLEAN NOT NULL DEFAULT 0 CHECK (permanente IN (0, 1)),
+    mesiValidita   INTEGER
 );
 
--- 3. Qualifiche possedute dai singoli utenti (data_scadenza NULL se permanente)
+-- 3. Qualifiche possedute dai singoli utenti (dataScadenza NULL se permanente)
 CREATE TABLE IF NOT EXISTS utente_qualifica (
-    id_utente         INTEGER NOT NULL,
-    codice_qualifica  TEXT    NOT NULL,
-    data_rilascio     TEXT    NOT NULL,
-    data_scadenza     TEXT,
-    PRIMARY KEY (id_utente, codice_qualifica),
-    FOREIGN KEY (id_utente)        REFERENCES utente(id_utente)   ON DELETE CASCADE,
-    FOREIGN KEY (codice_qualifica) REFERENCES qualifica(codice)   ON DELETE RESTRICT
+    idUtente         INTEGER NOT NULL,
+    codiceQualifica  TEXT    NOT NULL,
+    dataRilascio     TEXT    NOT NULL,
+    dataScadenza     TEXT,
+    PRIMARY KEY (idUtente, codiceQualifica),
+    FOREIGN KEY (idUtente)        REFERENCES utente(idUtente)   ON DELETE CASCADE,
+    FOREIGN KEY (codiceQualifica) REFERENCES qualifica(codice)  ON DELETE RESTRICT
 );
 
 -- 4. Aree di servizio
 CREATE TABLE IF NOT EXISTS area_servizio (
-    id_area         INTEGER PRIMARY KEY AUTOINCREMENT,
+    idArea          INTEGER PRIMARY KEY AUTOINCREMENT,
     nome            TEXT    NOT NULL UNIQUE,
     categoria       TEXT    NOT NULL,
-    richiede_mezzo  INTEGER NOT NULL DEFAULT 0 CHECK (richiede_mezzo IN (0, 1)),
-    descrizione     TEXT
+    descrizione     TEXT,
+    richiedeMezzo   BOOLEAN NOT NULL DEFAULT 0 CHECK (richiedeMezzo IN (0, 1)),
+    isContinuativo  BOOLEAN NOT NULL DEFAULT 0 CHECK (isContinuativo IN (0, 1))
 );
 
 -- 5. Flotta mezzi della sede
 CREATE TABLE IF NOT EXISTS mezzo (
-    id_mezzo               INTEGER PRIMARY KEY AUTOINCREMENT,
-    sigla                  TEXT    NOT NULL UNIQUE,
-    targa                  TEXT    NOT NULL UNIQUE,
-    tipo                   TEXT    NOT NULL,
-    stato                  TEXT    NOT NULL DEFAULT 'DISPONIBILE'
-                                   CHECK (stato IN ('DISPONIBILE', 'IN_MANUTENZIONE', 'FUORI_SERVIZIO')),
-    prossima_manutenzione  TEXT
+    idMezzo               INTEGER PRIMARY KEY AUTOINCREMENT,
+    sigla                 TEXT    NOT NULL UNIQUE,
+    targa                 TEXT    NOT NULL UNIQUE,
+    tipo                  TEXT    NOT NULL,
+    stato                 TEXT    NOT NULL DEFAULT 'DISPONIBILE'
+                                  CHECK (stato IN ('DISPONIBILE', 'IN_MANUTENZIONE', 'FUORI_SERVIZIO')),
+    prossimaManutenzione  TEXT
 );
 
 -- 6. Dotazioni di bordo e parametri telemetrici simulati
 CREATE TABLE IF NOT EXISTS dotazione (
-    id_dotazione          INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_mezzo              INTEGER NOT NULL,
-    nome                  TEXT    NOT NULL,
-    unita_misura          TEXT,
-    valore_attuale        REAL,
-    soglia_minima         REAL,
-    stato                 TEXT    NOT NULL DEFAULT 'OK'
-                                  CHECK (stato IN ('OK', 'CARENTE', 'NON_OPERATIVA')),
-    ultimo_aggiornamento  TEXT,
-    FOREIGN KEY (id_mezzo) REFERENCES mezzo(id_mezzo) ON DELETE CASCADE
+    idDotazione          INTEGER PRIMARY KEY AUTOINCREMENT,
+    idMezzo              INTEGER NOT NULL,
+    nome                 TEXT    NOT NULL,
+    unitaMisura          TEXT,
+    valoreAttuale        REAL,
+    sogliaMinima         REAL,
+    stato                TEXT    NOT NULL DEFAULT 'OK'
+                                 CHECK (stato IN ('OK', 'CARENTE', 'NON_OPERATIVA')),
+    ultimoAggiornamento  TEXT,
+    FOREIGN KEY (idMezzo) REFERENCES mezzo(idMezzo) ON DELETE CASCADE
 );
 
--- 7. Turni pianificati (5 stati del ciclo di vita)
+-- 7. Turni pianificati (allineati alla classe Turno)
 CREATE TABLE IF NOT EXISTS turno (
-    id_turno         INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_area          INTEGER NOT NULL,
-    id_mezzo         INTEGER,
-    data_ora_inizio  TEXT    NOT NULL,
-    data_ora_fine    TEXT    NOT NULL,
-    stato            TEXT    NOT NULL DEFAULT 'INCOMPLETO'
-                             CHECK (stato IN ('INCOMPLETO', 'CONFERMATO', 'OPERATIVO', 'CONCLUSO', 'ANNULLATO')),
-    note             TEXT,
-    CHECK (data_ora_fine > data_ora_inizio),
-    FOREIGN KEY (id_area)  REFERENCES area_servizio(id_area) ON DELETE RESTRICT,
-    FOREIGN KEY (id_mezzo) REFERENCES mezzo(id_mezzo)        ON DELETE SET NULL
+    idTurno       INTEGER PRIMARY KEY AUTOINCREMENT,
+    idArea        INTEGER NOT NULL,
+    idMezzo       INTEGER,
+    data          TEXT    NOT NULL,
+    oraInizio     TEXT    NOT NULL,
+    oraFine       TEXT    NOT NULL,
+    fasciaOraria  TEXT,
+    stato         TEXT    NOT NULL DEFAULT 'INCOMPLETO'
+                          CHECK (stato IN ('INCOMPLETO', 'CONFERMATO', 'OPERATIVO', 'CONCLUSO', 'ANNULLATO')),
+    note          TEXT,
+    FOREIGN KEY (idArea)  REFERENCES area_servizio(idArea) ON DELETE RESTRICT,
+    FOREIGN KEY (idMezzo) REFERENCES mezzo(idMezzo)        ON DELETE SET NULL
 );
 
--- 8. Posizioni di equipaggio per ciascun turno (id_volontario NULL se scoperta)
+-- 8. Posizioni di equipaggio per ciascun turno (idVolontario NULL se scoperta)
 CREATE TABLE IF NOT EXISTS posizione_turno (
-    id_posizione       INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_turno           INTEGER NOT NULL,
-    nome_ruolo         TEXT    NOT NULL,
-    obbligatoria       INTEGER NOT NULL DEFAULT 1 CHECK (obbligatoria IN (0, 1)),
-    id_volontario      INTEGER,
-    data_assegnazione  TEXT,
-    FOREIGN KEY (id_turno)      REFERENCES turno(id_turno)     ON DELETE CASCADE,
-    FOREIGN KEY (id_volontario) REFERENCES utente(id_utente)   ON DELETE SET NULL,
-    UNIQUE (id_turno, id_volontario)
+    idPosizione          INTEGER PRIMARY KEY AUTOINCREMENT,
+    idTurno              INTEGER NOT NULL,
+    nomeRuolo            TEXT    NOT NULL,
+    obbligatoria         BOOLEAN NOT NULL DEFAULT 1 CHECK (obbligatoria IN (0, 1)),
+    descrizioneAttivita  TEXT,
+    idVolontario         INTEGER,
+    dataAssegnazione     TEXT,
+    FOREIGN KEY (idTurno)      REFERENCES turno(idTurno)   ON DELETE CASCADE,
+    FOREIGN KEY (idVolontario) REFERENCES utente(idUtente) ON DELETE SET NULL,
+    UNIQUE (idTurno, idVolontario)
 );
 
 -- 9. Requisiti di qualifica per ciascuna posizione (AND tra gruppi diversi, OR nello stesso gruppo)
 CREATE TABLE IF NOT EXISTS posizione_requisito (
-    id_requisito        INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_posizione        INTEGER NOT NULL,
-    codice_qualifica    TEXT    NOT NULL,
-    gruppo_alternativa  INTEGER NOT NULL DEFAULT 1,
-    FOREIGN KEY (id_posizione)     REFERENCES posizione_turno(id_posizione) ON DELETE CASCADE,
-    FOREIGN KEY (codice_qualifica) REFERENCES qualifica(codice)             ON DELETE RESTRICT,
-    UNIQUE (id_posizione, codice_qualifica)
+    idRequisito        INTEGER PRIMARY KEY AUTOINCREMENT,
+    idPosizione        INTEGER NOT NULL,
+    codiceQualifica    TEXT    NOT NULL,
+    gruppoAlternativa  INTEGER NOT NULL DEFAULT 1,
+    FOREIGN KEY (idPosizione)     REFERENCES posizione_turno(idPosizione) ON DELETE CASCADE,
+    FOREIGN KEY (codiceQualifica) REFERENCES qualifica(codice)            ON DELETE RESTRICT,
+    UNIQUE (idPosizione, codiceQualifica)
 );
 
 -- 10. Notifiche e comunicazioni interne
 CREATE TABLE IF NOT EXISTS notifica (
-    id_notifica         INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_destinatario     INTEGER NOT NULL,
-    id_turno            INTEGER,
-    tipo                TEXT    NOT NULL,
-    messaggio           TEXT    NOT NULL,
-    letta               INTEGER NOT NULL DEFAULT 0 CHECK (letta IN (0, 1)),
-    data_ora_creazione  TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
-    FOREIGN KEY (id_destinatario) REFERENCES utente(id_utente) ON DELETE CASCADE,
-    FOREIGN KEY (id_turno)        REFERENCES turno(id_turno)   ON DELETE SET NULL
+    idNotifica        INTEGER PRIMARY KEY AUTOINCREMENT,
+    idDestinatario    INTEGER NOT NULL,
+    idTurno           INTEGER,
+    tipo              TEXT    NOT NULL,
+    messaggio         TEXT    NOT NULL,
+    letta             BOOLEAN NOT NULL DEFAULT 0 CHECK (letta IN (0, 1)),
+    dataOraCreazione  TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
+    FOREIGN KEY (idDestinatario) REFERENCES utente(idUtente) ON DELETE CASCADE,
+    FOREIGN KEY (idTurno)        REFERENCES turno(idTurno)   ON DELETE SET NULL
 );
 
 -- 11. Soglie e parametri configurabili di sistema (DOM.7)
@@ -140,7 +142,7 @@ INSERT OR IGNORE INTO configurazione (chiave, valore, descrizione) VALUES
     ('GIORNI_AVVISO_SCADENZA', '30', 'Giorni di anticipo per segnalare una qualifica in scadenza'),
     ('SOGLIA_MINIMA_OSSIGENO', '50.0', 'Livello minimo per considerare operativa la bombola ossigeno');
 
-INSERT OR IGNORE INTO qualifica (codice, denominazione, tipologia, permanente, mesi_validita) VALUES
+INSERT OR IGNORE INTO qualifica (codice, denominazione, tipologia, permanente, mesiValidita) VALUES
     ('VIS_MED',     'Visita Medica / Idoneita Sanitaria',                 'Idoneita Fisica',          0, 12),
     ('CRI',         'Corso di Formazione per Volontari CRI',              'Qualifica Base',           1, NULL),
     ('CRIVT',       'Corso per Volontari Temporanei CRI',                 'Qualifica Base',           1, NULL),
@@ -165,20 +167,20 @@ INSERT OR IGNORE INTO qualifica (codice, denominazione, tipologia, permanente, m
     ('PAT_CRI_ORD', 'Patente di Servizio CRI - Guida Ordinaria',          'Abilitazione Guida CRI',   0, 60),
     ('PAT_CRI_EM',  'Patente di Servizio CRI - Guida in Emergenza (TI)',  'Abilitazione Guida CRI',   0, 60);
 
-INSERT OR IGNORE INTO area_servizio (nome, categoria, richiede_mezzo, descrizione) VALUES
-    ('Servizio H12',                              'EMERGENZA',                1, 'Turno emergenza diurno 08:00-13:00 e 13:00-20:00'),
-    ('Servizio H24',                              'EMERGENZA',                1, 'Turno emergenza continuativo H24 su 4 fasce orarie'),
-    ('Bimbambulanza',                             'EVENTI_E_AMBULATORI',      1, 'Incontri educativi nelle scuole con ambulanza'),
-    ('Eventi',                                    'EVENTI_E_AMBULATORI',      1, 'Assistenza sanitaria a eventi con fasce orarie variabili'),
-    ('Ambulatorio Galgario',                      'EVENTI_E_AMBULATORI',      0, 'Ambulatorio serale lunedi-venerdi 20:30-22:00'),
-    ('Fast Track Ambulatorio OdS',                'EVENTI_E_AMBULATORI',      0, 'Test rapidi, accoglienza e counseling lunedi 17:00-21:00'),
-    ('Screening Colesterolo e Glicemia Lazzaretto','EVENTI_E_AMBULATORI',     0, 'Screening mattutini occasionali 07:30-11:00'),
-    ('Sportello Sociale',                         'SOCIALE',                  0, 'Colloqui di ascolto e orientamento socio-economico in sede'),
-    ('Sportello Sociale Itinerante',              'SOCIALE',                  1, 'Sportello mobile sul territorio con veicolo CRI'),
-    ('Sabato Insieme',                            'SOCIALE',                  1, 'Attivita ricreative e trasporto utenti con mezzi CRI'),
-    ('Distribuzione Beni',                        'SOCIALE',                  0, 'Preparazione e consegna pacchi alimentari e vestiario'),
-    ('Collette',                                  'SOCIALE',                  0, 'Raccolta beni presso punti vendita'),
-    ('Centralino',                                'LOGISTICA_E_CENTRALINO',   0, 'Centralino sede e sala radio H24 senza scoperture'),
-    ('Sistemazione Magazzino e Kit',              'LOGISTICA_E_CENTRALINO',   0, 'Inventario, controllo scadenze e assemblaggio kit'),
-    ('Mensa Stazione',                            'MENSE',                    0, 'Distribuzione pasti in stazione (pranzo domenica e sera lun-gio)'),
-    ('Mensa Patronato',                           'MENSE',                    0, 'Servizio ai tavoli lunedi-sabato 18:00-19:30');
+INSERT OR IGNORE INTO area_servizio (nome, categoria, descrizione, richiedeMezzo, isContinuativo) VALUES
+    ('Servizio H12',                              'EMERGENZA',                'Turno emergenza diurno 08:00-13:00 e 13:00-20:00', 1, 1),
+    ('Servizio H24',                              'EMERGENZA',                'Turno emergenza continuativo H24 su 4 fasce orarie', 1, 1),
+    ('Bimbambulanza',                             'EVENTI_E_AMBULATORI',      'Incontri educativi nelle scuole con ambulanza', 1, 0),
+    ('Eventi',                                    'EVENTI_E_AMBULATORI',      'Assistenza sanitaria a eventi con fasce orarie variabili', 1, 0),
+    ('Ambulatorio Galgario',                      'EVENTI_E_AMBULATORI',      'Ambulatorio serale lunedi-venerdi 20:30-22:00', 0, 0),
+    ('Fast Track Ambulatorio OdS',                'EVENTI_E_AMBULATORI',      'Test rapidi, accoglienza e counseling lunedi 17:00-21:00', 0, 0),
+    ('Screening Colesterolo e Glicemia Lazzaretto','EVENTI_E_AMBULATORI',     'Screening mattutini occasionali 07:30-11:00', 0, 0),
+    ('Sportello Sociale',                         'SOCIALE',                  'Colloqui di ascolto e orientamento socio-economico in sede', 0, 0),
+    ('Sportello Sociale Itinerante',              'SOCIALE',                  'Sportello mobile sul territorio con veicolo CRI', 1, 0),
+    ('Sabato Insieme',                            'SOCIALE',                  'Attivita ricreative e trasporto utenti con mezzi CRI', 1, 0),
+    ('Distribuzione Beni',                        'SOCIALE',                  'Preparazione e consegna pacchi alimentari e vestiario', 0, 0),
+    ('Collette',                                  'SOCIALE',                  'Raccolta beni presso punti vendita', 0, 0),
+    ('Centralino',                                'LOGISTICA_E_CENTRALINO',   'Centralino sede e sala radio H24 senza scoperture', 0, 1),
+    ('Sistemazione Magazzino e Kit',              'LOGISTICA_E_CENTRALINO',   'Inventario, controllo scadenze e assemblaggio kit', 0, 0),
+    ('Mensa Stazione',                            'MENSE',                    'Distribuzione pasti in stazione (pranzo domenica e sera lun-gio)', 0, 0),
+    ('Mensa Patronato',                           'MENSE',                    'Servizio ai tavoli lunedi-sabato 18:00-19:30', 0, 0);
