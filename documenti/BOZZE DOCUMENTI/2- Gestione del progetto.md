@@ -1,0 +1,11 @@
+
+# Software Life Cycle
+
+DEVE indicare il tipo di processo di sviluppo seguito PUO’ formalizzare con diagramma UML una piccola parte del sw development (ad esempio una change request come viene trattata) DOVREBBE anche usare un approccio MDA o parte di esso (con Yakindu o StarUML come visto in classe) POTREBBE presentare il progetto come SPL Documentazione: breve documento in cui indicare il tipo di processo seguito effettivamente. Eventuali differenze rispetto a quanto previsto nel project plan vanno indicate qui. Anche ad esempio come sono stati organizzati il timebox o gli sprint (ad esempio con le date) vanno indicati qui.
+# Configuration Management
+
+
+DEVE usare un sistema per il configuration management (consigliato github) con i relativi comandi (git add, commit, push etc.) DEVE dimostrare di aver usato issuses, branches, pull requests, e code reviews PUO’ usare la project board (tipo kanban o varianti simili) Documentazione: aggiungere al documento eventuali strumenti usati. Gli issue e l’uso di github è da vedere sul sito github (non è necessario documentarlo ma si possono portare alcune statistiche come numero di commit, di issues e cose del genere).
+# People Management and Team Organization 
+
+DEVE dire le persone e l’organizzazione del lavoro tra le persone (rifacendosi ad uno schema del libro) Documentazione: aggiungere al documento (1) la documentazione riguardante questo punto.
