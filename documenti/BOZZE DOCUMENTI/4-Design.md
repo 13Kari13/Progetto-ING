@@ -9,7 +9,22 @@ Consigliato metterlo nella sezione dei requisiti
 ## Class Diagram
 
 consigliato metterlo nella sezione Software Design
-[immagine-diagramma-classi]
+![Diagramma delle classi](../UML/Diagramma%20delle%20classi/diagramma_classi.png)
+### Classi generate automaticamente da StarUML v5 e classi manuali
+
+Dal Diagramma delle Classi (`documenti/UML/Diagramma delle classi/diagramma_classi.mdj`) sono state generate automaticamente da **StarUML v5** le seguenti **19 entità Java** nel package `it.unibg.smartrescue.model` (integrate con piccoli adattamenti manuali per gli `import` e i commenti Javadoc):
+
+- **Classi di dominio generate (11)**:
+  `AreaServizio`, `Configurazione`, `Dotazione`, `Mezzo`, `Notifica`, `PosizioneRequisito`, `PosizioneTurno`, `Qualifica`, `Turno`, `Utente`, `UtenteQualifica`.
+- **Enumerazioni generate (8)**:
+  `CategoriaServizio`, `LivelloCopertura`, `RuoloUtente`, `StatoDotazione`, `StatoMezzo`, `StatoTurno`, `TipoMezzo`, `TipoNotifica`.
+
+**Allineamento con il database SQLite (`schema.sql`):**  
+Le 11 classi di dominio corrispondono 1-a-1 alle 11 tabelle definite in `codice/src/main/resources/schema.sql`, mantenendo gli stessi identificativi e nomi degli attributi in `camelCase`.
+**Classi sviluppate manualmente (non generate da StarUML):**
+
+- `it.unibg.smartrescue.database.DatabaseManager`: implementata manualmente per gestire la connessione Singleton al database SQLite embedded in modalità WAL e il logging tramite Log4j 2.
+- Classi applicative di persistenza (**DAO**), logica di business/validazione (**Service / Strategy**), interfaccia grafica (**Controller JavaFX**) e suite di test (**JUnit 5**), i cui corpi dei metodi e le query SQL richiedono sviluppo manuale.
 
 ## State machine diagram
 
