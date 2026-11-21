@@ -9,9 +9,11 @@ Consigliato metterlo nella sezione dei requisiti
 ## Class Diagram
 
 consigliato metterlo nella sezione Software Design
+
 ![[diagramma_classi.jpg]]
 
 #### Classi generate automaticamente da StarUML v5 e classi manuali
+
 
 Dal Diagramma delle Classi (`documenti/UML/Diagramma delle classi/diagramma_classi.mdj`) sono state generate automaticamente da **StarUML v5** le seguenti **19 entità Java** nel package `it.unibg.smartrescue.model` (integrate con piccoli adattamenti manuali per gli `import` e i commenti Javadoc):
 
