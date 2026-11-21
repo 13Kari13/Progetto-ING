@@ -64,7 +64,6 @@ public class Dotazione {
      */
     public void simulaParametro() {
         // TODO implement here
-        
     }
 
 }
