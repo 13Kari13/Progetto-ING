@@ -92,6 +92,6 @@ In questo documento sono raccolte le decisioni prese e le attività svolte duran
 ### **Assegnazione compiti (Sprint WP4)**
 
 > * **Tutto il team:** progettare insieme il Diagramma delle Classi di dominio su StarUML (Volontario, Turno, Posizione, Mezzo, Dotazione, Qualifica, AreaServizio).  
-> * **Karima Frimane :** Diagramma dei Package, Componenti & Export /documenti/uml:  
-> * **Sukaina Derouich:** Database (schema.sql) \+ Verifica/Relazione:  
-> * **Marwa Laklaa:** Rilevazione reale \+ Diagramma delle Classi & Generazione Codice:
+> * **Karima Frimane:** Diagramma dei Package (senza cicli), Diagramma dei Componenti ed export in `/documenti/UML`.
+> * **Sukaina Derouich:** Schema del database (`schema.sql` per SQLite 3 allineato alle classi) e sezione nella Relazione sulle classi generate da StarUML.
+> * **Marwa Laklaa:** Rilevazione reale su Turnapp, Diagramma delle Classi e generazione codice Java da StarUML.
