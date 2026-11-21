@@ -64,6 +64,28 @@ Il ciclo di vita dell’entità Turno è modellato tramite una macchina a stati 
 * **Chiusura del servizio (OPERATIVO $\rightarrow$ CONCLUSO):** all'evento raggiuntaOraFine, chiude il turno tramite chiudi() conducendolo allo stato finale.
 * **Annullamento (INCOMPLETO / CONFERMATO $\rightarrow$ ANNULLATO):** all'evento annullaTurno prima dell'avvio, cancella il servizio tramite annulla() e, se il turno era già confermato, esegue anche liberaPosizione().
 
+#### 2. Diagramma di Stato: Mezzo
+
+Il ciclo di vita dell’entità Mezzo è modellato tramite una macchina a stati finiti basata sull’enumerazione StatoMezzo (DISPONIBILE, IN_SERVIZIO, IN_MANUTENZIONE, FUORI_SERVIZIO), che governa l’impiego operativo e lo stato manutentivo dei veicoli della flotta.
+
+![[diagramma_stati_mezzo.jpg]]
+##### Stati del Ciclo di Vita (StatoMezzo)
+
+| Stato | Tipo | Descrizione e Invarianti |
+| :--- | :--- | :--- |
+| **DISPONIBILE** | Iniziale / Operativo | Stato assunto alla registrazione del veicolo o al termine di un servizio/manutenzione. Il mezzo è idoneo, libero e con dotazioni conformi (verificaDotazione() == true). |
+| **IN_SERVIZIO** | Attivo | Stato assunto all’avvio di un turno operativo assegnato al veicolo. Il mezzo non può essere prenotato su altri turni sovrapposti (isDisponibile() == false). |
+| **IN_MANUTENZIONE** | Temporaneo | Stato di fermo tecnico per manutenzione ordinaria, guasto o dotazioni non conformi. Il veicolo è escluso dalla pianificazione operativa. |
+| **FUORI_SERVIZIO** | Finale | Stato terminale assunto in caso di dismissione definitiva del mezzo (Final State). |
+
+##### Transizioni, Guardie e Azioni
+
+* **Inizializzazione (Initial $\rightarrow$ DISPONIBILE):** all’evento registraMezzo, l’attributo stato viene inizializzato a DISPONIBILE.
+* **Assegnazione a turno attivo (DISPONIBILE $\rightarrow$ IN_SERVIZIO):** all’evento avviaTurno, verificata la disponibilità del mezzo (isDisponibile) e la conformità delle dotazioni (verificaDotazione), aggiorna lo stato tramite cambiaStato(IN_SERVIZIO).
+* **Rientro dal servizio (IN_SERVIZIO $\rightarrow$ DISPONIBILE):** all’evento chiudiTurno, al termine regolare del servizio, riporta il mezzo disponibile tramite cambiaStato(DISPONIBILE).
+* **Invio in manutenzione (DISPONIBILE / IN_SERVIZIO $\rightarrow$ IN_MANUTENZIONE):** all’evento segnalaManutenzione o segnalaGuasto, sospende l’operatività del veicolo tramite cambiaStato(IN_MANUTENZIONE).
+* **Ripristino operatività (IN_MANUTENZIONE $\rightarrow$ DISPONIBILE):** all’evento completaManutenzione, verificata nuovamente l’integrità delle dotazioni (verificaDotazione), riammette il mezzo in flotta tramite cambiaStato(DISPONIBILE).
+* **Dismissione (DISPONIBILE / IN_MANUTENZIONE $\rightarrow$ FUORI_SERVIZIO):** all’evento dismettiMezzo, imposta definitivamente cambiaStato(FUORI_SERVIZIO) conducendo allo stato finale.
 
 ## Sequence Diagram
 
