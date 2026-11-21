@@ -71,12 +71,12 @@ Il ciclo di vita dell’entità Mezzo è modellato tramite una macchina a stati 
 ![[diagramma_stati_mezzo.jpg]]
 ##### Stati del Ciclo di Vita (StatoMezzo)
 
-| Stato | Tipo | Descrizione e Invarianti |
-| :--- | :--- | :--- |
-| **DISPONIBILE** | Iniziale / Operativo | Stato assunto alla registrazione del veicolo o al termine di un servizio/manutenzione. Il mezzo è idoneo, libero e con dotazioni conformi (verificaDotazione() == true). |
-| **IN_SERVIZIO** | Attivo | Stato assunto all’avvio di un turno operativo assegnato al veicolo. Il mezzo non può essere prenotato su altri turni sovrapposti (isDisponibile() == false). |
-| **IN_MANUTENZIONE** | Temporaneo | Stato di fermo tecnico per manutenzione ordinaria, guasto o dotazioni non conformi. Il veicolo è escluso dalla pianificazione operativa. |
-| **FUORI_SERVIZIO** | Finale | Stato terminale assunto in caso di dismissione definitiva del mezzo (Final State). |
+| Stato               | Tipo                 | Descrizione e Invarianti                                                                                                                                                 |
+| :------------------ | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **DISPONIBILE**     | Iniziale / Operativo | Stato assunto alla registrazione del veicolo o al termine di un servizio/manutenzione. Il mezzo è idoneo, libero e con dotazioni conformi (verificaDotazione() == true). |
+| **IN_SERVIZIO**     | Attivo               | Stato assunto all’avvio di un turno operativo assegnato al veicolo. Il mezzo non può essere prenotato su altri turni sovrapposti (isDisponibile() == false).             |
+| **IN_MANUTENZIONE** | Temporaneo           | Stato di fermo tecnico per manutenzione ordinaria, guasto o dotazioni non conformi. Il veicolo è escluso dalla pianificazione operativa.                                 |
+| **FUORI_SERVIZIO**  | Finale               | Stato terminale assunto in caso di dismissione definitiva del mezzo (Final State).                                                                                       |
 
 ##### Transizioni, Guardie e Azioni
 
@@ -86,6 +86,29 @@ Il ciclo di vita dell’entità Mezzo è modellato tramite una macchina a stati 
 * **Invio in manutenzione (DISPONIBILE / IN_SERVIZIO $\rightarrow$ IN_MANUTENZIONE):** all’evento segnalaManutenzione o segnalaGuasto, sospende l’operatività del veicolo tramite cambiaStato(IN_MANUTENZIONE).
 * **Ripristino operatività (IN_MANUTENZIONE $\rightarrow$ DISPONIBILE):** all’evento completaManutenzione, verificata nuovamente l’integrità delle dotazioni (verificaDotazione), riammette il mezzo in flotta tramite cambiaStato(DISPONIBILE).
 * **Dismissione (DISPONIBILE / IN_MANUTENZIONE $\rightarrow$ FUORI_SERVIZIO):** all’evento dismettiMezzo, imposta definitivamente cambiaStato(FUORI_SERVIZIO) conducendo allo stato finale.
+
+#### 3. Diagramma di Stato: Dotazione
+
+Il ciclo di vita dell’entità Dotazione è modellato tramite una macchina a stati finiti basata sull’enumerazione StatoDotazione (CONFORME, IN_SCADENZA, SCADUTA, DA_SOSTITUIRE), che monitora la validità temporale e l’integrità dei presidi sanitari installati a bordo dei mezzi.
+![[diagramma_stati_dotazione.jpg]]
+##### Stati del Ciclo di Vita (StatoDotazione)
+
+| Stato | Tipo | Descrizione e Invarianti |
+| :--- | :--- | :--- |
+| **CONFORME** | Iniziale / Operativo | Stato assunto alla registrazione o al rinnovo del presidio. La dotazione è integra, presente nella quantità richiesta e non scaduta (isConforme() == true). |
+| **IN_SCADENZA** | Allerta | Stato di preavviso attivato quando la data di scadenza rientra nella soglia di attenzione configurata, pur restando temporaneamente utilizzabile (isScaduta() == false). |
+| **SCADUTA** | Critico | Stato assunto al superamento della data di validità (isScaduta() == true). Rende non conforme la dotazione complessiva del mezzo (verificaDotazione() == false). |
+| **DA_SOSTITUIRE** | Critico / Finale | Stato assunto in caso di guasto, consumo o quantità insufficiente (isConforme() == false). Richiede reintegro o dismissione definitiva (Final State). |
+
+##### Transizioni, Guardie e Azioni
+
+* **Inizializzazione (Initial $\rightarrow$ CONFORME):** all’evento registraDotazione, l’attributo stato viene inizializzato a CONFORME.
+* **Avviso di prossima scadenza (CONFORME $\rightarrow$ IN_SCADENZA):** all’evento controlloScadenza, se il presidio non è ancora scaduto (NOT isScaduta) ma entra nella soglia di preavviso, aggiorna stato a IN_SCADENZA.
+* **Superamento scadenza (CONFORME / IN_SCADENZA $\rightarrow$ SCADUTA):** all’evento controlloScadenza, al verificarsi della condizione isScaduta(), imposta stato = SCADUTA bloccando l’idoneità operativa del presidio.
+* **Rilevazione anomalia o simulazione (CONFORME / IN_SCADENZA $\rightarrow$ DA_SOSTITUIRE):** all’evento segnalaAnomalia (o simulaParametro), se viene meno la conformità fisica o quantitativa (NOT isConforme), imposta stato = DA_SOSTITUIRE.
+* **Rinnovo o reintegro (IN_SCADENZA / SCADUTA / DA_SOSTITUIRE $\rightarrow$ CONFORME):** agli eventi rinnovaDotazione o sostituisciDotazione, verificata nuovamente la conformità (isConforme), ripristina stato = CONFORME.
+
+![[diagramma_stato_dotazione.png]]
 
 ## Sequence Diagram
 
