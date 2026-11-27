@@ -27,14 +27,13 @@ public class PosizioneRequisito {
      * 
      */
     private int gruppoAlternativa;
+    private Qualifica qualifica;
 
     /**
-     * @param gruppo 
-     * @return
+     *restituisce se appartiene al gruppo delle qualifiche alternative
      */
     public boolean appartieneAGruppo(int gruppo) {
-        // TODO implement here
-        return false;
+    	return this.gruppoAlternativa == gruppo;
     }
 
 	public int getIdRequisito() {
@@ -53,4 +52,11 @@ public class PosizioneRequisito {
 		this.gruppoAlternativa = gruppoAlternativa;
 	}
 
+	public Qualifica getQualifica() {
+		return qualifica;
+	}
+
+	public void setQualifica(Qualifica qualifica) {
+		this.qualifica = qualifica;
+	}
 }

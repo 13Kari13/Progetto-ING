@@ -85,8 +85,7 @@ public class PosizioneTurno {
     }
 
     /**
-     * il metodo verificaRequisiti controlla se l'utente è attivo, se i requsiti non ci sono (quindi restituisce true senza controllare le qualifiche del'utente).
-     * Poi controlla le qualifiche dell'utente per vedere se la qualifica richiesta in requisiti è valida (quindi se l'utente ce l'ha o non ce l'ha e se è valida alla data del turno)
+     * controlla i requisiti obbligatori e poi quelli alternativi 
      */
     public boolean verificaRequisiti(Utente u, LocalDate dataTurno) {
     	if (u == null || !u.isAttivo()) {
@@ -95,11 +94,36 @@ public class PosizioneTurno {
         if (this.requisiti == null || this.requisiti.isEmpty()) {
             return true;
         }
+
         for (PosizioneRequisito req : this.requisiti) {
-            if (req.getQualifica() != null && !u.haQualificaValida(req.getQualifica().getCodice(), dataTurno)) {
-                return false;
+            if (req.appartieneAGruppo(0)) {
+                if (req.getQualifica() == null 
+                        || !u.haQualificaValida(req.getQualifica().getCodice(), dataTurno)) {
+                    return false;
+                }
             }
         }
+
+        Set<Integer> gruppiControllati = new HashSet<>();
+        for (PosizioneRequisito req : this.requisiti) {
+            int gruppo = req.getGruppoAlternativa();
+            if (gruppo > 0 && !gruppiControllati.contains(gruppo)) {
+                gruppiControllati.add(gruppo);
+                
+                boolean almenoUnaValida = false;
+                for (PosizioneRequisito r : this.requisiti) {
+                    if (r.appartieneAGruppo(gruppo) && r.getQualifica() != null
+                            && u.haQualificaValida(r.getQualifica().getCodice(), dataTurno)) {
+                        almenoUnaValida = true;
+                        break;
+                    }
+                }
+                if (!almenoUnaValida) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 
