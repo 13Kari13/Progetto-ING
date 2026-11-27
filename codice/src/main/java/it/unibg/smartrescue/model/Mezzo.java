@@ -23,6 +23,8 @@ public class Mezzo {
      * Default constructor
      */
     public Mezzo() {
+    	this.stato= StatoMezzo.DISPONIBILE;
+    	
     }
 
     /**
@@ -81,5 +83,11 @@ public class Mezzo {
         // TODO implement here
         return false;
     }
+
+	public StatoMezzo getStato() {
+		return stato;
+	}
+
+
 
 }
