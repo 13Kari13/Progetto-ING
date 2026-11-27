@@ -37,4 +37,20 @@ public class PosizioneRequisito {
         return false;
     }
 
+	public int getIdRequisito() {
+		return idRequisito;
+	}
+
+	public void setIdRequisito(int idRequisito) {
+		this.idRequisito = idRequisito;
+	}
+
+	public int getGruppoAlternativa() {
+		return gruppoAlternativa;
+	}
+
+	public void setGruppoAlternativa(int gruppoAlternativa) {
+		this.gruppoAlternativa = gruppoAlternativa;
+	}
+
 }

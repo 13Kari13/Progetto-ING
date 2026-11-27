@@ -28,6 +28,7 @@ public class UtenteQualifica {
      */
 	
     public UtenteQualifica() {
+    	this.dataScadenza=qualifica.calcolaDataScadenza(dataRilascio);
     }
 
     /**

@@ -89,4 +89,44 @@ public class PosizioneTurno {
         return false;
     }
 
+	public int getIdPosizione() {
+		return idPosizione;
+	}
+
+	public void setIdPosizione(int idPosizione) {
+		this.idPosizione = idPosizione;
+	}
+
+	public String getNomeRuolo() {
+		return nomeRuolo;
+	}
+
+	public void setNomeRuolo(String nomeRuolo) {
+		this.nomeRuolo = nomeRuolo;
+	}
+
+	public boolean isObbligatoria() {
+		return obbligatoria;
+	}
+
+	public void setObbligatoria(boolean obbligatoria) {
+		this.obbligatoria = obbligatoria;
+	}
+
+	public String getDescrizioneAttivita() {
+		return descrizioneAttivita;
+	}
+
+	public void setDescrizioneAttivita(String descrizioneAttivita) {
+		this.descrizioneAttivita = descrizioneAttivita;
+	}
+
+	public LocalDate getDataAssegnazione() {
+		return dataAssegnazione;
+	}
+
+	public void setDataAssegnazione(LocalDate dataAssegnazione) {
+		this.dataAssegnazione = dataAssegnazione;
+	}
+
 }

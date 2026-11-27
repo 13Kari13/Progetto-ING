@@ -56,7 +56,7 @@ public class Mezzo {
      * 
      */
     private String targa;
-
+    private List<Dotazione> dotazioni =new ArrayList<>();
     /**
      * @param data 
      * @param inizio 
@@ -64,28 +64,71 @@ public class Mezzo {
      * @return
      */
     public boolean isDisponibile(LocalDate data, LocalTime inizio, LocalTime fine) {
-        // TODO implement here
+       // TODO
         return false;
     }
 
     /**
-     * @param nuovoStato 
-     * @return
+     * il metodo cambiaStato cambia allo stato desiderato nuovoStato
      */
     public void cambiaStato(StatoMezzo nuovoStato) {
-        // TODO implement here
+        this.stato=nuovoStato;
     }
 
     /**
-     * @return
+     * il metodo verificaDotazioni verifica che tutte le dotazioni siano conformi, se anche solo 1 non è conferma allora restituisce false.
      */
     public boolean verificaDotazioni() {
-        // TODO implement here
-        return false;
+        for(Dotazione d: dotazioni) {
+        	if(d.isConforme()==false) {
+        		return false;
+        	}
+        }
+    	return true;
     }
 
 	public StatoMezzo getStato() {
 		return stato;
+	}
+
+	public String getTarga() {
+		return targa;
+	}
+
+	public void setTarga(String targa) {
+		this.targa = targa;
+	}
+
+	public TipoMezzo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoMezzo tipo) {
+		this.tipo = tipo;
+	}
+
+	public LocalDate getProssimaManutenzione() {
+		return prossimaManutenzione;
+	}
+
+	public void setProssimaManutenzione(LocalDate prossimaManutenzione) {
+		this.prossimaManutenzione = prossimaManutenzione;
+	}
+
+	public int getIdMezzo() {
+		return idMezzo;
+	}
+
+	public void setIdMezzo(int idMezzo) {
+		this.idMezzo = idMezzo;
+	}
+
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
 	}
 
 
