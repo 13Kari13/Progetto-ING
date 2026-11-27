@@ -58,19 +58,55 @@ public class AreaServizio {
      * @return
      */
     public boolean necessitaMezzo() {
-        // TODO implement here
-        return false;
+        return this.richiedeMezzo;
     }
 
     /**
-     * @param data 
-     * @param inizio 
-     * @param fine 
-     * @return
+     * il metodo pianificaTurno crea un nuovo turno
      */
     public Turno pianificaTurno(LocalDate data, LocalTime inizio, LocalTime fine) {
-        // TODO implement here
-        return null;
+        Turno t=new Turno(data, inizio, fine, this);
+        return t;
     }
+
+	public int getIdArea() {
+		return idArea;
+	}
+
+	public void setIdArea(int idArea) {
+		this.idArea = idArea;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public CategoriaServizio getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaServizio categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	public boolean isContinuativo() {
+		return isContinuativo;
+	}
+
+	public void setContinuativo(boolean isContinuativo) {
+		this.isContinuativo = isContinuativo;
+	}
 
 }

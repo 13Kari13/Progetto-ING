@@ -37,6 +37,12 @@ public class Turno {
     public Turno() {
     	this.stato=StatoTurno.INCOMPLETO; // impostiamo di default che sia incompleto
     }
+    public Turno(LocalDate d, LocalTime i, LocalTime f, AreaServizio a) {
+    	this.data=d;
+    	this.oraInizio=i;
+    	this.oraFine=f;
+    	this.areaServizio=a;
+    }
 
     /**
      * 
