@@ -1,2 +1,6 @@
 *.class
 target/
+# Database SQLite e file temporanei
+*.db
+*.db-wal
+*.db-shm
