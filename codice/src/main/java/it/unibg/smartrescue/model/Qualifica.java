@@ -44,28 +44,66 @@ public class Qualifica {
     private Integer mesiValidita;
 
     /**
-     * @return
+     * il metodo isPermanente controlla se i mesivalidia non sono segnati e se non sono segnati vuol dire che la qualifica non ha scadenze
      */
     public boolean isPermanente() {
-        // TODO implement here
+        if(mesiValidita==null) {
+        	return true;
+        }
         return false;
     }
 
     /**
-     * @param dataRilascio 
-     * @return
+     * il metodo calcolaDataScadenza calcola la datadiascandeza aggiungendo i mesi di validita alla data di rilascio. Effettua prima un controllo per vedere se non è permanente la qualifica
      */
     public LocalDate calcolaDataScadenza(LocalDate dataRilascio) {
-        // TODO implement here
-        return null;
+    	if(this.isPermanente()) {
+    		return null;
+    	}
+        LocalDate dataScadenza=dataRilascio.plusMonths(mesiValidita);
+        return dataScadenza;
     }
 
     /**
-     * @return
+     * il metodo isPatente restituisce true se la tipologia è patente. In questo metodo ho dei dubbi se cambiare l'attributo tipologia in una enum 
      */
     public boolean isPatente() {
-        // TODO implement here
+        if(this.tipologia=="PATENTE") {
+        	return true;
+        }
         return false;
     }
+
+	public String getCodice() {
+		return codice;
+	}
+
+	public void setCodice(String codice) {
+		this.codice = codice;
+	}
+
+	public String getDenominazione() {
+		return denominazione;
+	}
+
+	public void setDenominazione(String denominazione) {
+		this.denominazione = denominazione;
+	}
+
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
+
+	public Integer getMesiValidita() {
+		return mesiValidita;
+	}
+
+	public void setMesiValidita(Integer mesiValidita) {
+		this.mesiValidita = mesiValidita;
+	}
 
 }

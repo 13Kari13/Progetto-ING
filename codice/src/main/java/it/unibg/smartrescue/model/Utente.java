@@ -61,14 +61,20 @@ public class Utente {
      * 
      */
     private boolean attivo;
+    
+    private List<UtenteQualifica> qualifiche=new ArrayList<>(); //non era tra gli attributi generati da UML questo
 
     /**
-     * @param codice 
-     * @param data 
-     * @return
+     * il metodo haQualificaValida controlla (tra le diverse qualifiche) se è valida una determinata qualifica dato il codice e la data per cui si vuole sapere
      */
     public boolean haQualificaValida(String codice, LocalDate data) {
-        // TODO implement here
+        for(UtenteQualifica q : qualifiche) {
+        	if( q.getQualifica().getCodice().equals(codice)){
+        		if(q.isValidaAllaData(data)) {
+        			return true;
+        		}
+        	}
+        }
         return false;
     }
 
@@ -77,8 +83,72 @@ public class Utente {
      * @return
      */
     public boolean rispettaRiposoMinimo(LocalDateTime inizioTurno) {
-        // TODO implement here
+        // TODO 
         return false;
     }
+
+	public int getIdUtente() {
+		return idUtente;
+	}
+
+	public void setIdUtente(int idUtente) {
+		this.idUtente = idUtente;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public RuoloUtente getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(RuoloUtente ruolo) {
+		this.ruolo = ruolo;
+	}
+
+	public boolean isAttivo() {
+		return attivo;
+	}
+
+	public void setAttivo(boolean attivo) {
+		this.attivo = attivo;
+	}
 
 }
