@@ -180,7 +180,33 @@ public class Turno {
 	public void setMezzo(Mezzo mezzo) {
 		this.mezzo = mezzo;
 	}
+
+	public String getFasciaOraria() {
+		return fasciaOraria;
+	}
+
+	public void setFasciaOraria(String fasciaOraria) {
+		this.fasciaOraria = fasciaOraria;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public int getIdTurno() {
+		return idTurno;
+	}
+
+	public void setIdTurno(int idTurno) {
+		this.idTurno = idTurno;
+	}
     
-    
+    public LocalDate getData() {
+    	return data;
+    }
 
 }

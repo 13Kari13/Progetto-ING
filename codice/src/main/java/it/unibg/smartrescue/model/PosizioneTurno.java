@@ -22,6 +22,9 @@ import java.util.*;
  * che invece verifica che l'utente abbia i requisiti per poter ricoprire questo ruolo nel turno
  */
 public class PosizioneTurno {
+	private Utente utenteAssegnato;
+	private Turno turno;
+	private List<PosizioneRequisito> requisiti= new ArrayList<>();
 
     /**
      * Default constructor
@@ -58,35 +61,46 @@ public class PosizioneTurno {
      * @return
      */
     public boolean isLibera() {
-        // TODO implement here
-        return false;
+        return this.utenteAssegnato==null;
     }
 
     /**
-     * @param u 
-     * @return
+     *il metodo assegnaVolontario fa un controllo per vedere se il turno c'è o no e poi in caso fa la verifica se è libera la posizione 
+     *e poi fa la verifica dei requisiti sull'utente
      */
     public void assegnaVolontario(Utente u) {
-        // TODO implement here
-        
+    	LocalDate dataTurno= (this.turno!= null) ? this.turno.getData() : LocalDate.now();
+        if(this.isLibera() && this.verificaRequisiti(u,this.turno.getData())) {
+        	this.utenteAssegnato=u;
+        	this.dataAssegnazione=LocalDate.now();
+        }
     }
 
     /**
      * @return
      */
     public void liberaPosizione() {
-        // TODO implement here
-        
+       this.utenteAssegnato=null;
+       this.dataAssegnazione=null;
     }
 
     /**
-     * @param u 
-     * @param dataTurno 
-     * @return
+     * il metodo verificaRequisiti controlla se l'utente è attivo, se i requsiti non ci sono (quindi restituisce true senza controllare le qualifiche del'utente).
+     * Poi controlla le qualifiche dell'utente per vedere se la qualifica richiesta in requisiti è valida (quindi se l'utente ce l'ha o non ce l'ha e se è valida alla data del turno)
      */
     public boolean verificaRequisiti(Utente u, LocalDate dataTurno) {
-        // TODO implement here
-        return false;
+    	if (u == null || !u.isAttivo()) {
+            return false;
+        }
+        if (this.requisiti == null || this.requisiti.isEmpty()) {
+            return true;
+        }
+        for (PosizioneRequisito req : this.requisiti) {
+            if (req.getQualifica() != null && !u.haQualificaValida(req.getQualifica().getCodice(), dataTurno)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 	public int getIdPosizione() {
@@ -129,4 +143,24 @@ public class PosizioneTurno {
 		this.dataAssegnazione = dataAssegnazione;
 	}
 
+	public Utente getUtenteAssegnato() {
+		return utenteAssegnato;
+	}
+
+	public Turno getTurno() {
+		return turno;
+	}
+
+	public void setTurno(Turno turno) {
+		this.turno = turno;
+	}
+	
+	public List<PosizioneRequisito> getRequisiti() {
+	    return requisiti;
+	}
+
+	public void setRequisiti(List<PosizioneRequisito> requisiti) {
+	    this.requisiti = requisiti;
+	}
+	
 }
