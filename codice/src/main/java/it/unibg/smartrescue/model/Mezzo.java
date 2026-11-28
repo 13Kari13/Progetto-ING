@@ -22,6 +22,12 @@ public class Mezzo {
     /**
      * Default constructor
      */
+	public Mezzo() {
+	}
+	
+	/**
+	 * costruttore con parametri
+	 */
     public Mezzo(String s, TipoMezzo tm, LocalDate pm, String t) {
     	this.stato= StatoMezzo.DISPONIBILE;
     	this.sigla=s;
@@ -31,40 +37,38 @@ public class Mezzo {
     }
 
     /**
-     * 
+     * id incrementale 
      */
     private int idMezzo;
 
     /**
-     * 
+     * sigla del mezzo 
      */
     private String sigla;
 
     /**
-     * 
+     * tipo di mezzo (AMBULANZA ecc..)
      */
     private TipoMezzo tipo;
 
     /**
-     * 
+     * Stato del mezzo (in servizio, manutenzione, fuori servizio ecc...)
      */
     private StatoMezzo stato;
 
     /**
-     * 
+     * data della prossima manutenzione
      */
     private LocalDate prossimaManutenzione;
 
     /**
-     * 
+     * targa del mezzo 
      */
     private String targa;
+    
     private List<Dotazione> dotazioni =new ArrayList<>();
     /**
-     * @param data 
-     * @param inizio 
-     * @param fine 
-     * @return
+     * il metodo isDisponibile controlla se il mezzo è disponibile per una determinata data
      */
     public boolean isDisponibile(LocalDate data, LocalTime inizio, LocalTime fine) {
        // TODO

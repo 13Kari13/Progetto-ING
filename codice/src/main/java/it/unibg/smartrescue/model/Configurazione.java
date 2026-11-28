@@ -16,25 +16,31 @@ import java.util.*;
 public class Configurazione {
 
     /**
-     *  constructor
+     *  Default constructor
      */
+	
+	public Configurazione() {
+	}
+	/**
+	 * costruttore con parametri
+	 */
     public Configurazione(String v, String d) {
     	this.valore=v;
     	this.descrizione=d;
     }
 
     /**
-     * 
+     * chiave incrementale
      */
     private String chiave;
 
     /**
-     * 
+     *  il valore 
      */
     private String valore;
 
     /**
-     * 
+     * breve descrizione di cosa si tratta (es. riposo minimo ecc..)
      */
     private String descrizione;
 

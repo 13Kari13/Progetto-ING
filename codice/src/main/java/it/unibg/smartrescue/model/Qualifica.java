@@ -20,6 +20,12 @@ public class Qualifica {
     /**
      * Default constructor
      */
+	public Qualifica() {
+	}
+	
+	/***
+	 * costruttoire con parametri
+	 */
     public Qualifica(String d, String t, Integer mv) {
     	this.denominazione=d;
     	this.tipologia=t;
@@ -27,22 +33,22 @@ public class Qualifica {
     }
 
     /**
-     * 
+     * codice incrementale
      */
     private String codice;
 
     /**
-     * 
+     * nome della qualifica
      */
     private String denominazione;
 
     /**
-     * 
+     * tipologia della qualifica (patente ecc..)
      */
     private String tipologia;
 
     /**
-     * 
+     * mesi di validita della qualifica
      */
     private Integer mesiValidita;
 

@@ -21,6 +21,12 @@ public class AreaServizio {
     /**
      * Default constructor
      */
+	public AreaServizio() {
+	}
+	
+	/**
+	 * costruttore con parametri
+	 */
     public AreaServizio(String n, CategoriaServizio c, String d, boolean m, boolean co) {
     	this.nome=n;
     	this.categoria=c;
@@ -29,32 +35,32 @@ public class AreaServizio {
     	this.isContinuativo=co;
     }
     /**
-     * 
+     * id incrementale
      */
     private int idArea;
 
     /**
-     * 
+     * nome dell'area di servizio
      */
     private String nome;
 
     /**
-     * 
+     * categoria a cui appartiene
      */
     private CategoriaServizio categoria;
 
     /**
-     * 
+     * descrizione di questa area di servizio
      */
     private String descrizione;
 
     /**
-     * 
+     * indica se è necessario il mezzo
      */
     private boolean richiedeMezzo;
 
     /**
-     * 
+     * indica se è un servizio che non può avere scoperture
      */
     private boolean isContinuativo;
 

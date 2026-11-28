@@ -18,6 +18,12 @@ public class Dotazione {
     /**
      * Default constructor
      */
+	public Dotazione() {
+	}
+	
+	/** 
+	 *costruttore con parametri
+	 */
     public Dotazione(String n, String um, double s, StatoDotazione st, double va) {
     	this.nome=n;
     	this.unitaMisura=um;
@@ -27,32 +33,32 @@ public class Dotazione {
     }
 
     /**
-     * 
+     * id incrementale
      */
     private int idDotazione;
 
     /**
-     * 
+     * nome della dotazione (es. bombola ossigeno)
      */
     private String nome;
 
     /**
-     * 
+     * unità di misura usata per indicare quel valore 
      */
     private String unitaMisura;
 
     /**
-     * 
+     * soglia che deve superare per essere considerato a norma
      */
     private double sogliaMinima;
 
     /**
-     * 
+     * stato della dotazione (ok, carente ecc..)
      */
     private StatoDotazione stato;
 
     /**
-     * 
+     * valore a cui si trova attualmente la dotazione 
      */
     private double valoreAttuale;
 

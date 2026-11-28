@@ -19,46 +19,59 @@ public class Utente {
     /**
      * Default constructor
      */
-    public Utente() {
+	public Utente() {
+	}
+	
+	/**
+	 * costruttore con parametri
+	 */
+    public Utente(String n, String c, String e, String p, String t, RuoloUtente r, boolean a) {
+    	this.nome=n;
+    	this.cognome=c;
+    	this.email=e;
+    	this.passwordHash=p;
+    	this.telefono=t;
+    	this.attivo=a;
+    	this.ruolo=r;
     }
 
     /**
-     * 
+     * id incrementale
      */
     private int idUtente;
 
     /**
-     * 
+     * nome dell'utente
      */
     private String nome;
 
     /**
-     * 
+     * cognome dell'utente
      */
     private String cognome;
 
     /**
-     * 
+     * email dell'utente
      */
     private String email;
 
     /**
-     * 
+     * password dell'utente
      */
     private String passwordHash;
 
     /**
-     * 
+     * telefono dell'utente
      */
     private String telefono;
 
     /**
-     * 
+     * ruolo utente
      */
     private RuoloUtente ruolo;
 
     /**
-     * 
+     * indica se l'utente è attivo o no 
      */
     private boolean attivo;
     

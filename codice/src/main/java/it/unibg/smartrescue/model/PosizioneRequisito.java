@@ -15,7 +15,8 @@ public class PosizioneRequisito {
     /**
      * Default constructor
      */
-    public PosizioneRequisito() {
+    public PosizioneRequisito(int g) {
+    	this.gruppoAlternativa=g;
     }
 
     /**

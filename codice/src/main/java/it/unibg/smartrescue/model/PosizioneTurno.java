@@ -22,43 +22,56 @@ import java.util.*;
  * che invece verifica che l'utente abbia i requisiti per poter ricoprire questo ruolo nel turno
  */
 public class PosizioneTurno {
-	private Utente utenteAssegnato;
-	private Turno turno;
-	private List<PosizioneRequisito> requisiti= new ArrayList<>();
-
     /**
      * Default constructor
      */
-    public PosizioneTurno() {
+	
+	public PosizioneTurno() {
+	}
+	
+	/**
+	 * costruttore con parametri
+	 */
+    public PosizioneTurno(String nr, boolean o, String da) {
+    	this.nomeRuolo=nr;
+    	this.obbligatoria=o;
+    	this.descrizioneAttivita=da;
+    	this.dataAssegnazione=null;
+    	this.utenteAssegnato=null;
     }
 
     /**
-     * 
+     * id incrementale
      */
     private int idPosizione;
 
     /**
-     * 
+     * Il nome del ruolo all'interno del turno
      */
     private String nomeRuolo;
 
     /**
-     * 
+     * Indica se questa persona è obbligatoria da avere nel turno
      */
     private boolean obbligatoria;
 
     /**
-     * 
+     * Descrive le attività svolte da questo ruolo
      */
     private String descrizioneAttivita;
 
     /**
-     * 
+     * Registra la data di assegnazione di questo ruolo
      */
     private LocalDate dataAssegnazione;
+    
+    private Utente utenteAssegnato;
+	private Turno turno;
+	private List<PosizioneRequisito> requisiti= new ArrayList<>();
+
 
     /**
-     * @return
+     * il metodo isLibera verifica se l'utente assegnato è nullo
      */
     public boolean isLibera() {
         return this.utenteAssegnato==null;
@@ -70,14 +83,14 @@ public class PosizioneTurno {
      */
     public void assegnaVolontario(Utente u) {
     	LocalDate dataTurno= (this.turno!= null) ? this.turno.getData() : LocalDate.now();
-        if(this.isLibera() && this.verificaRequisiti(u,this.turno.getData())) {
+        if(this.isLibera() && this.verificaRequisiti(u,dataTurno)) {
         	this.utenteAssegnato=u;
         	this.dataAssegnazione=LocalDate.now();
         }
     }
 
     /**
-     * @return
+     * il metodo liberaPosizione toglie l'utente assegnato e rimette i valori a quelli iniziali
      */
     public void liberaPosizione() {
        this.utenteAssegnato=null;
@@ -185,6 +198,9 @@ public class PosizioneTurno {
 
 	public void setRequisiti(List<PosizioneRequisito> requisiti) {
 	    this.requisiti = requisiti;
+	}
+	public void setUtenteAssegnato(Utente u) {
+		this.utenteAssegnato=u;
 	}
 	
 }

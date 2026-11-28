@@ -11,7 +11,12 @@ import java.util.*;
  * **segnaComeLetta()**.
  */
 public class Notifica {
-
+	
+	/**
+	 * Default constructor
+	 */
+	public Notifica() {
+	}
     /**
      * assegno letta di default come falsa
      */
@@ -23,27 +28,27 @@ public class Notifica {
     }
 
     /**
-     * 
+     * id incrementale
      */
     private int idNotifica;
 
     /**
-     * 
+     * tipo di notifica
      */
     private TipoNotifica tipo;
 
     /**
-     * 
+     * messaggio che viene visualizzato nella notifica
      */
     private String messaggio;
 
     /**
-     * 
+     * data e ora di creazione della notifica
      */
     private LocalDateTime dataOraCreazione;
 
     /**
-     * 
+     * boolean che indica lo stato di lettura della notifica
      */
     private boolean letta;
 
