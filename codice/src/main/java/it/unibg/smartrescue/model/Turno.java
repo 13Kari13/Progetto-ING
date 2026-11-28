@@ -214,5 +214,13 @@ public class Turno {
     public LocalDate getData() {
     	return data;
     }
-
+    public LocalTime getOraInizio() {
+    	return oraInizio;
+    }
+    public LocalTime getOraFine() {
+    	return oraFine;
+    }
+	public StatoTurno getStato() {
+		return stato;
+	}
 }

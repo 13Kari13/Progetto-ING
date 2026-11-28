@@ -15,7 +15,7 @@ import java.util.*;
  * - **haQualificaValida(..)**: verifica che la qualifica sia valida
  */
 public class Utente {
-
+	private List<Turno> turni = new ArrayList<>();
     /**
      * Default constructor
      */
@@ -79,12 +79,45 @@ public class Utente {
     }
 
     /**
-     * @param inizioTurno 
-     * @return
+     * i metodi rispettaRiposoMinimo verifica che i turni non siano sovrapposti. ci sono due metodi. uno è generato e prende come default riposo minimo di 8 ore. 
+     * l'altro è un metodo che viene invocato solo se cambia il riposoMinimo configurato
      */
+    
     public boolean rispettaRiposoMinimo(LocalDateTime inizioTurno) {
-        // TODO 
-        return false;
+        return rispettaRiposoMinimo(inizioTurno, 8); // default 8 ore
+    }
+    public boolean rispettaRiposoMinimo(LocalDateTime inizioTurno, int oreRiposoMinime) {
+    	if (inizioTurno == null || this.turni == null || this.turni.isEmpty()) {
+            return true;
+        }
+
+        for (Turno t : this.turni) {
+            if (t.getStato() == StatoTurno.ANNULLATO || t.getData() == null 
+                    || t.getOraInizio() == null || t.getOraFine() == null) {
+                continue;
+            }
+
+            LocalDateTime inizioEsistente = LocalDateTime.of(t.getData(), t.getOraInizio());
+            LocalDateTime fineEsistente = LocalDateTime.of(t.getData(), t.getOraFine());
+            // Gestione eventuale turno notturno che finisce il giorno dopo
+            if (!t.getOraFine().isAfter(t.getOraInizio())) {
+                fineEsistente = fineEsistente.plusDays(1);
+            }
+
+            // 1. Controllo sovrapposizione diretta con un turno già in corso
+            if (!inizioEsistente.isAfter(inizioTurno) && fineEsistente.isAfter(inizioTurno)) {
+                return false;
+            }
+
+            // 2. Controllo ore di riposo dopo un turno precedente
+            if (!fineEsistente.isAfter(inizioTurno)) {
+                long oreRiposo = Duration.between(fineEsistente, inizioTurno).toHours();
+                if (oreRiposo < oreRiposoMinime) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 	public int getIdUtente() {
@@ -149,6 +182,14 @@ public class Utente {
 
 	public void setAttivo(boolean attivo) {
 		this.attivo = attivo;
+	}
+
+	public List<Turno> getTurni() {
+		return turni;
+	}
+
+	public void setTurni(List<Turno> turni) {
+		this.turni = turni;
 	}
 
 }
