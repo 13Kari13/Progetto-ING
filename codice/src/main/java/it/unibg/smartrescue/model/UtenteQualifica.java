@@ -19,11 +19,16 @@ import java.util.*;
  * - **isScaduta()** controlla che la qualifica non sia scaduta al momento.
  */
 public class UtenteQualifica {
+	
+	private Utente utente;
+	private Qualifica qualifica;
 
     /**
      * Default constructor
      */
+	
     public UtenteQualifica() {
+    	this.dataScadenza=qualifica.calcolaDataScadenza(dataRilascio);
     }
 
     /**
@@ -37,29 +42,68 @@ public class UtenteQualifica {
     private LocalDate dataScadenza;
 
     /**
-     * @param dataTurno 
-     * @return
+     * Il metodo isValidaAllaData controlla se la qualifica è valida alla data del turno e restituisce true se non scade entro quel giorno o se non ha data di scadeza quella qualifica
+     * 
      */
     public boolean isValidaAllaData(LocalDate dataTurno) {
-        // TODO implement here
+        if(this.dataScadenza==null || this.dataScadenza.isAfter(dataTurno)) {
+        	return true;
+        }
         return false;
     }
 
     /**
-     * @param giorniSoglia 
-     * @return
+     * il metodo isInScadenza calcola quanti giorni mancano alla soglia dei giorni per inviare l'avviso all'utente che sta scadendo la qualifica
      */
     public boolean isInScadenza(int giorniSoglia) {
-        // TODO implement here
-        return false;
+        if (this.dataScadenza == null || this.isScaduta()) {
+            return false;
+        }
+        long giorniMancanti = LocalDate.now().datesUntil(this.dataScadenza).count();
+        return giorniMancanti <= giorniSoglia;
     }
 
     /**
-     * @return
+     * Il metodo isScaduta fa il check sulla data di oggi e la data di scadenza indicata nella qualifica ma se la scadenza è null (quindi una di quelle sempre valide)--> retituisc false
+     * 
      */
     public boolean isScaduta() {
-        // TODO implement here
-        return false;
+       if(this.dataScadenza==null || this.dataScadenza.isAfter(LocalDate.now()) ){
+    	   return false;
+       }
+       return true;
     }
 
+	public LocalDate getDataRilascio() {
+		return dataRilascio;
+	}
+
+	public void setDataRilascio(LocalDate dataRilascio) {
+		this.dataRilascio=dataRilascio;
+	}
+	
+	public LocalDate getDataScadenza() {
+		return dataScadenza;
+	}
+
+	public void setDataScadenza(LocalDate dataScadenza) {
+		this.dataScadenza=dataScadenza;
+	}
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+	public Qualifica getQualifica() {
+		return qualifica;
+	}
+
+	public void setQualifica(Qualifica qualifica) {
+		this.qualifica = qualifica;
+	}
+	
 }

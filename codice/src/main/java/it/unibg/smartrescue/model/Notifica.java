@@ -11,44 +11,94 @@ import java.util.*;
  * **segnaComeLetta()**.
  */
 public class Notifica {
-
+	
+	/**
+	 * Default constructor
+	 */
+	public Notifica() {
+	}
     /**
-     * Default constructor
+     * assegno letta di default come falsa
      */
-    public Notifica() {
+    public Notifica(TipoNotifica ti, String m, LocalDateTime doc) {
+    	this.setLetta(false); 
+    	this.dataOraCreazione=doc;
+    	this.messaggio=m;
+    	this.tipo=ti;
     }
 
     /**
-     * 
+     * id incrementale
      */
     private int idNotifica;
 
     /**
-     * 
+     * tipo di notifica
      */
     private TipoNotifica tipo;
 
     /**
-     * 
+     * messaggio che viene visualizzato nella notifica
      */
     private String messaggio;
 
     /**
-     * 
+     * data e ora di creazione della notifica
      */
     private LocalDateTime dataOraCreazione;
 
     /**
-     * 
+     * boolean che indica lo stato di lettura della notifica
      */
     private boolean letta;
 
     /**
-     * @return
+     * il metodo segnaComeLetta cambia letta in true 
      */
     public void segnaComeLetta() {
-        // TODO implement here
-     
+        if(this.letta==false) {
+        	this.letta=true;
+        }
     }
+
+	public int getIdNotifica() {
+		return idNotifica;
+	}
+
+	public void setIdNotifica(int idNotifica) {
+		this.idNotifica = idNotifica;
+	}
+
+	public TipoNotifica getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoNotifica tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getMessaggio() {
+		return messaggio;
+	}
+
+	public void setMessaggio(String messaggio) {
+		this.messaggio = messaggio;
+	}
+
+	public LocalDateTime getDataOraCreazione() {
+		return dataOraCreazione;
+	}
+
+	public void setDataOraCreazione(LocalDateTime dataOraCreazione) {
+		this.dataOraCreazione = dataOraCreazione;
+	}
+
+	public boolean isLetta() {
+		return letta;
+	}
+
+	public void setLetta(boolean letta) {
+		this.letta = letta;
+	}
 
 }

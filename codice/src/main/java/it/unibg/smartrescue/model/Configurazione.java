@@ -16,40 +16,76 @@ import java.util.*;
 public class Configurazione {
 
     /**
-     * Default constructor
+     *  Default constructor
      */
-    public Configurazione() {
+	
+	public Configurazione() {
+	}
+	/**
+	 * costruttore con parametri
+	 */
+    public Configurazione(String v, String d) {
+    	this.valore=v;
+    	this.descrizione=d;
     }
 
     /**
-     * 
+     * chiave incrementale
      */
     private String chiave;
 
     /**
-     * 
+     *  il valore 
      */
     private String valore;
 
     /**
-     * 
+     * breve descrizione di cosa si tratta (es. riposo minimo ecc..)
      */
     private String descrizione;
 
     /**
-     * @return
+     * il metodo getValoreInt restiruisce il numero intero del valore scritto 
      */
     public int getValoreInt() {
-        // TODO implement here
-        return 0;
+    	if (this.valore==null) {
+            return 0;
+        }
+        return Integer.parseInt(this.valore.trim());
     }
 
     /**
-     * @return
+     * il metodo getValoreDouble restituisce il valore double
      */
     public double getValoreDouble() {
-        // TODO implement here
-        return 0.0d;
+    	if (this.valore == null) {
+            return 0;
+        }
+        return Double.parseDouble(valore);
     }
+
+	public String getChiave() {
+		return chiave;
+	}
+
+	public void setChiave(String chiave) {
+		this.chiave = chiave;
+	}
+
+	public String getValore() {
+		return valore;
+	}
+
+	public void setValore(String valore) {
+		this.valore = valore;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
 
 }
