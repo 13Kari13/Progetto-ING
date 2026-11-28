@@ -21,9 +21,13 @@ public class AreaServizio {
     /**
      * Default constructor
      */
-    public AreaServizio() {
+    public AreaServizio(String n, CategoriaServizio c, String d, boolean m, boolean co) {
+    	this.nome=n;
+    	this.categoria=c;
+    	this.descrizione=d;
+    	this.richiedeMezzo=m;
+    	this.isContinuativo=co;
     }
-
     /**
      * 
      */
@@ -55,7 +59,7 @@ public class AreaServizio {
     private boolean isContinuativo;
 
     /**
-     * @return
+     * il metodo ritorna true se questo servizio richiede anche l'uso di mezzi
      */
     public boolean necessitaMezzo() {
         return this.richiedeMezzo;

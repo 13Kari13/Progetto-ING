@@ -15,8 +15,11 @@ public class Notifica {
     /**
      * assegno letta di default come falsa
      */
-    public Notifica() {
+    public Notifica(TipoNotifica ti, String m, LocalDateTime doc) {
     	this.setLetta(false); 
+    	this.dataOraCreazione=doc;
+    	this.messaggio=m;
+    	this.tipo=ti;
     }
 
     /**

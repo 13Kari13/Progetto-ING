@@ -22,9 +22,12 @@ public class Mezzo {
     /**
      * Default constructor
      */
-    public Mezzo() {
+    public Mezzo(String s, TipoMezzo tm, LocalDate pm, String t) {
     	this.stato= StatoMezzo.DISPONIBILE;
-    	
+    	this.sigla=s;
+    	this.tipo=tm;
+    	this.prossimaManutenzione=pm;
+    	this.targa=t;
     }
 
     /**

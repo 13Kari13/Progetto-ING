@@ -18,7 +18,12 @@ public class Dotazione {
     /**
      * Default constructor
      */
-    public Dotazione() {
+    public Dotazione(String n, String um, double s, StatoDotazione st, double va) {
+    	this.nome=n;
+    	this.unitaMisura=um;
+    	this.stato=st;
+    	this.sogliaMinima=s;
+    	this.valoreAttuale=va;
     }
 
     /**

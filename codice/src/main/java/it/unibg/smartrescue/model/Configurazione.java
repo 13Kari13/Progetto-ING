@@ -16,9 +16,11 @@ import java.util.*;
 public class Configurazione {
 
     /**
-     * Default constructor
+     *  constructor
      */
-    public Configurazione() {
+    public Configurazione(String v, String d) {
+    	this.valore=v;
+    	this.descrizione=d;
     }
 
     /**

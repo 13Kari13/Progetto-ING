@@ -20,7 +20,10 @@ public class Qualifica {
     /**
      * Default constructor
      */
-    public Qualifica() {
+    public Qualifica(String d, String t, Integer mv) {
+    	this.denominazione=d;
+    	this.tipologia=t;
+    	this.mesiValidita=mv;
     }
 
     /**
